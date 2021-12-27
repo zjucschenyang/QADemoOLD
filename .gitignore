@@ -102,3 +102,7 @@ ENV/
 
 # html file generate by QUANTAXIS
 *.html
+
+*.DS_Store
+
+.idea/*
