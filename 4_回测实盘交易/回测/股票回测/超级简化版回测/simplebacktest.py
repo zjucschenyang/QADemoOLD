@@ -83,14 +83,23 @@ def simple_backtest(AC, code, start, end):
                     )
                     if order:
                         order.trade('unknownTrade', order.price,
+
                                     order.amount, order.datetime)
+        # 做股票的结算
         AC.settle()
 
+# 这里从stock_list拿，如果从stock_block中拿，要拿到非股票数据
+select_stocks = QA.QA_fetch_stock_list_adv()
+select_stocks = list(select_stocks.code[0:10])
+print(select_stocks)
 
-simple_backtest(AC, QA.QA_fetch_stock_block_adv(
-).code[0:10], '2017-01-01', '2018-01-31')
+# 开始测试
+simple_backtest(AC, select_stocks, '2017-01-01', '2018-01-31')
+
+# 保存账户信息
 print(AC.message)
 AC.save()
+
 risk = QA.QA_Risk(AC)
 print(risk.message)
 risk.save()
